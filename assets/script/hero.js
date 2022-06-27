@@ -24,6 +24,9 @@ cc.Class({
         this._faceDir = 1 //脸部朝向 -1：左边， 1：右边
         this._State = COM.State.IDLE // 当前动画设置为待机
         this._onButton = false  // 按钮是否被按着
+        this.game = this.node.parent.getComponent("game")
+        cc.log('this.game', this.game)
+        this.boundary = this.game.boundary
         this.setEvent(this.leftButton)
         this.setEvent(this.rightButton)
     },
@@ -75,7 +78,9 @@ cc.Class({
 
     },
     move() {
-        this.node.x += this._speed
+        if (this.node.x > -this.boundary - this._speed && this.node.x + this._speed < this.boundary) {
+            this.node.x += this._speed
+        }
     },
     update(dt) {
         if (this._speed != 0) {
